@@ -3,6 +3,8 @@ package facades;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+
 import security.errorhandling.AuthenticationException;
 
 /**
@@ -33,7 +35,12 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
-            user = em.find(User.class, username);
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u where u.userName=:username", User.class);
+            query.setParameter("username", username);
+            query.setMaxResults(1);
+            user = query.getSingleResult();
+
+
             if (user == null || !user.verifyPassword(password)) {
                 throw new AuthenticationException("Invalid user name or password");
             }
