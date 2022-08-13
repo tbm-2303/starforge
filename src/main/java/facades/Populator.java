@@ -5,7 +5,9 @@
  */
 package facades;
 
+import dtos.DriverDTO;
 import dtos.RenameMeDTO;
+import entities.Driver;
 import entities.RenameMe;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
@@ -15,6 +17,8 @@ import utils.EMF_Creator;
  * @author tha
  */
 public class Populator {
+
+
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         FacadeExample fe = FacadeExample.getFacadeExample(emf);
@@ -22,8 +26,15 @@ public class Populator {
         fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
         fe.create(new RenameMeDTO(new RenameMe("First 3", "Last 3")));
     }
+    public static void populate2(){
+        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+        CarFacade carFacade = CarFacade.getCarFacadeExample(emf);
+        FacadeExample fe = FacadeExample.getFacadeExample(emf);
+        carFacade.addDriverToCar(1,2);
+    }
     
     public static void main(String[] args) {
-        populate();
+        //populate();
+        populate2();
     }
 }
