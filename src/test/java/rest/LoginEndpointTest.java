@@ -72,17 +72,13 @@ public class LoginEndpointTest {
             Role userRole = new Role("user");
             Role adminRole = new Role("admin");
             User user = new User("user", "test");
-            user.addRole(userRole);
+            user.setRole(userRole);
             User admin = new User("admin", "test");
-            admin.addRole(adminRole);
-            User both = new User("user_admin", "test");
-            both.addRole(userRole);
-            both.addRole(adminRole);
+            admin.setRole(adminRole);
             em.persist(userRole);
             em.persist(adminRole);
             em.persist(user);
             em.persist(admin);
-            em.persist(both);
             //System.out.println("Saved test data to database");
             em.getTransaction().commit();
         } finally {
