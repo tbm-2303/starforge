@@ -65,7 +65,7 @@ public class Populator {
         em.persist(admin);
         em.getTransaction().commit();
         System.out.println("PW: " + user.getUserPass());
-        System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
+        System.out.println("Testing user with OK password: " + user.verifyPassword("test123"));
         System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
         System.out.println("Created TEST Users");
 
@@ -73,7 +73,7 @@ public class Populator {
     
     public static void main(String[] args) {
         //populate();
-        populate2();
+       // populate2();
         populate3();
     }
 }

@@ -54,49 +54,7 @@ public class DemoResource {
             em.close();
         }
     }
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("setup")
-    public String setup(){
-        EntityManager em = EMF.createEntityManager();
 
-        User user = new User("user", "test12");
-        User admin = new User("admin", "test12");
-        User driver = new User("driver", "test12");
-
-        if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||driver.getUserPass().equals("test"))
-            throw new UnsupportedOperationException("You have not changed the passwords");
-
-
-        em.getTransaction().begin();
-        Role userRole = new Role("user");
-        Role adminRole = new Role("admin");
-        Role driverRole = new Role("driver");
-        user.setRole(userRole);
-        admin.setRole(adminRole);
-        driver.setRole(driverRole);
-        em.persist(userRole);
-        em.persist(adminRole);
-        em.persist(user);
-        em.persist(admin);
-        em.persist(driver);
-        em.getTransaction().commit();
-        System.out.println("PW: " + user.getUserPass());
-        System.out.println("Testing user with OK password: " + user.verifyPassword("timmy123"));
-        System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
-        System.out.println("Created TEST Users");
-        return "{\"msg\":\"setup all good\"}";
-    }
-
-
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("randomjoke")
-    public String getRandomJoke() throws IOException {
-        String joke = HttpUtils.fetchData("https://api.chucknorris.io/jokes/random");
-        return "{\"msg\": \"Random Joke: " + joke + "\"}";
-    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
