@@ -37,7 +37,6 @@ public class UserFacade {
         try {
             TypedQuery<User> query = em.createQuery("SELECT u FROM User u where u.userName=:username", User.class);
             query.setParameter("username", username);
-            query.setMaxResults(1);
             user = query.getSingleResult();
 
 
