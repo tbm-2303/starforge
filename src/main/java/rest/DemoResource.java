@@ -54,7 +54,34 @@ public class DemoResource {
             em.close();
         }
     }
-
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("setup")
+    public String setup() {
+        EntityManager em = EMF.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            User user = new User("user", "user123");
+            User admin = new User("admin", "admin123");
+            User driver = new User("driver", "driver123");
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            Role driverRole = new Role("driver");
+            user.setRole(userRole);
+            admin.setRole(adminRole);
+            driver.setRole(driverRole);
+            em.persist(userRole);
+            em.persist(adminRole);
+            em.persist(driverRole);
+            em.persist(user);
+            em.persist(driver);
+            em.persist(admin);
+            em.getTransaction().commit();
+            return "ok! setup";
+        } finally {
+            em.close();
+        }
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
