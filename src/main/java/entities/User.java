@@ -31,26 +31,12 @@ public class User implements Serializable {
   @Column(name = "user_pass")
   private String userPass;
 
-  @ManyToMany()
-  @JoinTable(
-          name = "user_roles",
-          joinColumns = {@JoinColumn(name = "user_name")},
-          inverseJoinColumns = {@JoinColumn(name = "role_name")})
-
-  private List<Role> roleList = new ArrayList<>();
+  @ManyToOne
+  @JoinColumn(name = "role_name")
+  private Role role;
 
 
 
-  public List<String> getRolesAsStrings() {
-    if (roleList.isEmpty()) {
-      return null;
-    }
-    List<String> rolesAsStrings = new ArrayList<>();
-    roleList.forEach((role) -> {
-        rolesAsStrings.add(role.getRoleName());
-      });
-    return rolesAsStrings;
-  }
 
   public User() {}
 
@@ -82,16 +68,13 @@ public class User implements Serializable {
     this.userPass = userPass;
   }
 
-  public List<Role> getRoleList() {
-    return roleList;
+
+  public Role getRole() {
+    return role;
   }
 
-  public void setRoleList(List<Role> roleList) {
-    this.roleList = roleList;
-  }
-
-  public void addRole(Role userRole) {
-    roleList.add(userRole);
+  public void setRole(Role role) {
+    this.role = role;
   }
 
   public int getId() {
